@@ -26,7 +26,7 @@ def test_integration_sla_breach(mock_openai, tmp_path):
     from razi.runtime.runtime import execute_run
     from razi.replay.replay import execute_replay
     
-    base_dir = Path("/Users/ehsan/Desktop/razi") # using absolute for simplicity in this generated codebase
+    base_dir = Path(__file__).parent.parent  # repo root
     
     # Setup mock returns
     mock_openai.return_value = json.dumps({
@@ -67,7 +67,7 @@ def test_integration_policy_catch_and_retry(mock_openai):
     from razi.compiler.compile import compile_spec
     from razi.runtime.runtime import execute_run
     
-    base_dir = Path("/Users/ehsan/Desktop/razi")
+    base_dir = Path(__file__).parent.parent  # repo root
     
     # Attempt 1: Returns a severity SLA violation (S3 on enterprise)
     # Attempt 2: Corrects it to S2

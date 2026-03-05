@@ -31,6 +31,6 @@ operators:
   - type: synth.json
     id: synthesis
     evidence_ref: evidence
-    template: templates/escalation_decision_v1.txt
+    template: examples/templates/escalation_decision_v1.txt
     max_attempts: 3
     confidence_threshold: 0.6
