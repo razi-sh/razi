@@ -1,6 +1,6 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![CI](https://github.com/razi-sh/razi/actions/workflows/ci.yml/badge.svg)](https://github.com/razi-sh/razi/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/razi.svg)](https://badge.fury.io/py/razi)
+[![PyPI version](https://badge.fury.io/py/razi.svg)](https://pypi.org/project/razi/)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
 # Razi — Deterministic Governance Harness for AI Workflows
