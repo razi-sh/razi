@@ -1,0 +1,31 @@
+name: zendesk_troubleshooter
+version: 1.0.0
+policy: enterprise_support_v1
+
+model:
+  provider: openai
+  id: gpt-4o-mini
+  temperature: 0.1
+
+input_schema: examples/schemas/zendesk_input.json
+output_schema: examples/schemas/zendesk_output.json
+
+operators:
+  - type: evidence.index
+    id: evidence
+    fields:
+      - key: subject
+        source: input.subject
+      - key: description
+        source: input.description
+      - key: tags
+        source: input.tags
+      - key: comments
+        source: input.injected_comments
+
+  - type: synth.json
+    id: synthesis
+    evidence_ref: evidence
+    template: examples/templates/zendesk_troubleshoot.txt
+    max_attempts: 3
+    confidence_threshold: 0.7

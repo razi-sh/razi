@@ -1,0 +1,13 @@
+{
+    "ticket_id": 10492,
+    "subject": "Platform returning 500 errors on the checkout page",
+    "description": "Hi support, since this morning our customers are unable to complete checkout. They are getting a 500 Internal Server Error when clicking 'Pay'. We checked our network and everything seems fine on our end. This is a P1 issue for us.",
+    "priority": "high",
+    "tags": [
+        "checkout",
+        "500-error",
+        "urgent"
+    ],
+    "requester_email": "admin@example-store.com",
+    "created_at": "2026-03-04T08:15:00Z"
+}

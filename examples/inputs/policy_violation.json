@@ -1,0 +1,19 @@
+{
+    "ticket_id": "T-1003",
+    "account_tier": "smb",
+    "current_severity": "S4",
+    "sla_hours": 72,
+    "time_open_hours": 5,
+    "customer_messages": [
+        "How do I reset my password?"
+    ],
+    "internal_notes": [
+        "Sending them the password reset link."
+    ],
+    "usage_metrics": {
+        "conversion_rate": 100,
+        "requests_per_minute": 50
+    },
+    "open_incidents": 0,
+    "contract_value": 5000
+}

@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "customer_text": {
+            "type": "string",
+            "description": "The raw text provided by the customer."
+        }
+    },
+    "required": [
+        "customer_text"
+    ],
+    "additionalProperties": false
+}

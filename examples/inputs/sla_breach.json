@@ -1,0 +1,19 @@
+{
+    "ticket_id": "T-1001",
+    "account_tier": "enterprise",
+    "current_severity": "S2",
+    "sla_hours": 1,
+    "time_open_hours": 2.5,
+    "customer_messages": [
+        "My system is completely down and I cannot process any new sales! We are losing thousands of dollars an hour! Help!"
+    ],
+    "internal_notes": [
+        "I checked the logs and it looks like the DB crashed because I accidentally dropped the users table during the 3 AM migration. I'm frantically trying to restore it. -Ehsan"
+    ],
+    "usage_metrics": {
+        "conversion_rate": 0,
+        "requests_per_minute": 0
+    },
+    "open_incidents": 1,
+    "contract_value": 500000
+}

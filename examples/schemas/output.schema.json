@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "recommended_severity": {
+            "type": "string",
+            "enum": [
+                "S1",
+                "S2",
+                "S3",
+                "S4"
+            ]
+        },
+        "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "justification": {
+            "type": "string"
+        },
+        "evidence_ids": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        },
+        "policy_compliant": {
+            "type": "boolean"
+        },
+        "violations": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "action_plan": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        }
+    },
+    "required": [
+        "recommended_severity",
+        "confidence",
+        "justification",
+        "evidence_ids",
+        "policy_compliant",
+        "violations",
+        "action_plan"
+    ],
+    "additionalProperties": false
+}

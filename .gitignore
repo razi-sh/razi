@@ -1,0 +1,48 @@
+# Internal — never push to public repo
+Razi_OSS_Launch_Playbook.pdf
+Razi_Onboarding_Guide.md
+Razi_Runbook.md
+Razi_Wedge_v1_PRD.md
+razi_wedge_v1_execution_design_final.md
+generate_demo.py
+razi_demo.html
+
+# Real customer / test data — keep out of public repo
+test_data/
+
+# Duplicate template location (canonical copy is examples/templates/)
+templates/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Razi runtime artifacts — NEVER commit these
+runs/
+build/
+
+# Environment
+.env
+*.env
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/

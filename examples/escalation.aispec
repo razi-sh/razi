@@ -1,0 +1,36 @@
+name: escalation_qualification
+version: 1.0.0
+policy: enterprise_support_v1
+
+model:
+  provider: openai
+  id: gpt-4o
+  temperature: 0.2
+
+input_schema: examples/schemas/escalation_input.schema.json
+output_schema: examples/schemas/escalation_decision.schema.json
+
+operators:
+  - type: evidence.index
+    id: evidence
+    fields:
+      - key: customer_message
+        source: input.customer_message
+      - key: account_tier
+        source: input.account_tier
+      - key: current_severity
+        source: input.current_severity
+      - key: sla_hours
+        source: input.sla_hours
+      - key: time_open
+        source: input.time_open_hours
+      - key: internal_notes
+        source: input.internal_notes
+        governed: true
+
+  - type: synth.json
+    id: synthesis
+    evidence_ref: evidence
+    template: templates/escalation_decision_v1.txt
+    max_attempts: 3
+    confidence_threshold: 0.6

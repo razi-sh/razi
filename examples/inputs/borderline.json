@@ -1,0 +1,19 @@
+{
+    "ticket_id": "T-1002",
+    "account_tier": "midmarket",
+    "current_severity": "S3",
+    "sla_hours": 24,
+    "time_open_hours": 1.5,
+    "customer_messages": [
+        "The checkout page is loading a bit slowly for some users in the EU region."
+    ],
+    "internal_notes": [
+        "We are seeing slightly elevated latency from the EU-West datacenter, possibly network congestion."
+    ],
+    "usage_metrics": {
+        "conversion_rate": 95.5,
+        "requests_per_minute": 1200
+    },
+    "open_incidents": 0,
+    "contract_value": 40000
+}

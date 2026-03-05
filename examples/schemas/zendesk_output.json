@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "category": {
+            "type": "string",
+            "description": "The category of the incident based on the context."
+        },
+        "root_cause_hypothesis": {
+            "type": "string",
+            "description": "A short hypothesis of what might be causing the issue."
+        },
+        "troubleshooting_steps": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of ordered steps an engineer should take to investigate."
+        },
+        "escalate": {
+            "type": "boolean",
+            "description": "Whether this should page the on-call engineer immediately."
+        },
+        "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.0,
+            "description": "AI confidence in its classification."
+        },
+        "evidence_ids": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Evidence keys used to make this decision."
+        }
+    },
+    "required": [
+        "category",
+        "root_cause_hypothesis",
+        "troubleshooting_steps",
+        "escalate",
+        "confidence",
+        "evidence_ids"
+    ],
+    "additionalProperties": false
+}
