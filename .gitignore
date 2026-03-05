@@ -11,7 +11,8 @@ razi_demo.html
 test_data/
 
 # Duplicate template location (canonical copy is examples/templates/)
-templates/
+# Root-anchored so it only matches /templates, NOT /examples/templates
+/templates/
 
 # Python
 __pycache__/
