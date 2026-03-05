@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razi — The notary for AI decisions</title>
+    <meta name="description"
+        content="Razi is a deterministic governance harness for AI workflows. Policy-enforced, evidence-traced, replayable offline.">
+    <meta property="og:title" content="Razi — The notary for AI decisions">
+    <meta property="og:description" content="The model proposes. The harness authorizes. Open source, Apache 2.0.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700;800;900&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04050a;
+            --surface: #0d0f1a;
+            --surface2: #141626;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-bright: rgba(255, 255, 255, 0.14);
+            --text: #f0f2ff;
+            --text-dim: #8b90af;
+            --text-muted: #555a78;
+            --accent: #6366f1;
+            --accent-bright: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.35);
+            --accent-dim: rgba(99, 102, 241, 0.1);
+            --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.12);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── NAV ─────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            padding: 18px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(4, 5, 10, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo em {
+            color: var(--accent);
+            font-style: normal
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text)
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-bright) !important;
+            transform: translateY(-1px)
+        }
+
+        /* ─── HERO ────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 120px 80px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* animated grid background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+        }
+
+        /* radial glow */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 860px
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 100px;
+            padding: 6px 16px;
+            margin-bottom: 40px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-bright);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(0.85)
+            }
+        }
+
+        .hero-headline {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: clamp(52px, 9vw, 100px);
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 32px;
+            color: var(--text);
+        }
+
+        .hero-headline .accent {
+            color: var(--accent-bright)
+        }
+
+        .hero-headline .dim {
+            color: var(--text-muted)
+        }
+
+        .hero-sub {
+            font-size: 19px;
+            color: var(--text-dim);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 56px;
+        }
+
+        /* ─── THREE BULLETS ───────────────────────── */
+        .hero-bullets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 860px;
+            margin-bottom: 56px;
+        }
+
+        .bullet {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 28px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .bullet:hover {
+            border-color: rgba(99, 102, 241, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.1);
+        }
+
+        .bullet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bullet:hover::before {
+            opacity: 1
+        }
+
+        .bullet-icon {
+            font-size: 28px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .bullet-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--text);
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .bullet-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        .bullet-code {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-bright);
+            background: var(--accent-dim);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        /* ─── CTA BUTTONS ─────────────────────────── */
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            letter-spacing: -0.2px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 0 0 var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-primary svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--text-dim);
+            padding: 14px 24px;
+            border-radius: 10px;
+            border: 1px solid var(--border-bright);
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text);
+            border-color: rgba(255, 255, 255, 0.25);
+            background: var(--surface);
+        }
+
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px
+        }
+
+        /* ─── INSTALL SNIPPET ─────────────────────── */
+        .install-strip {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 80px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .install-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        .install-cmd {
+            font-family: 'DM Mono', monospace;
+            font-size: 14px;
+            color: var(--text);
+            padding: 10px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border-bright);
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: all;
+            transition: border-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .install-cmd:hover {
+            border-color: rgba(255, 255, 255, 0.25)
+        }
+
+        .install-cmd .prompt {
+            color: var(--text-muted)
+        }
+
+        .install-cmd .cmd-text {
+            color: var(--accent-bright)
+        }
+
+        .copy-hint {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ─── DEMO SECTION ────────────────────────── */
+        #demo {
+            padding: 80px 0 0;
+        }
+
+        .demo-header {
+            padding: 0 80px 48px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .section-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-bright);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-eyebrow::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(32px, 5vw, 52px);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            color: var(--text);
+        }
+
+        .demo-scroll-hint {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 4px;
+        }
+
+        .demo-scroll-hint svg {
+            width: 14px;
+            height: 14px
+        }
+
+        /* The embedded demo iframe */
+        .demo-frame-wrapper {
+            position: relative;
+            width: 100%;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: #f8fafc;
+            overflow: hidden;
+        }
+
+        .demo-frame-wrapper iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+            min-height: 700px;
+        }
+
+        /* ─── FOOTER ──────────────────────────────── */
+        footer {
+            padding: 48px 80px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .footer-logo em {
+            color: var(--accent);
+            font-style: normal
+        }
+
+        .footer-copy {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text)
+        }
+
+        /* ─── RESPONSIVE ──────────────────────────── */
+        @media (max-width: 900px) {
+            .hero {
+                padding: 100px 32px 64px
+            }
+
+            .hero-bullets {
+                grid-template-columns: 1fr;
+                max-width: 100%
+            }
+
+            nav {
+                padding: 16px 24px
+            }
+
+            .nav-links {
+                gap: 16px
+            }
+
+            .install-strip {
+                padding: 16px 32px;
+                flex-wrap: wrap
+            }
+
+            .demo-header {
+                padding: 0 32px 36px;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start
+            }
+
+            footer {
+                padding: 36px 32px;
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-headline {
+                letter-spacing: -2px
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+
+        /* entrance animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .fade-up:nth-child(1) {
+            transition-delay: 0.0s
+        }
+
+        .fade-up:nth-child(2) {
+            transition-delay: 0.08s
+        }
+
+        .fade-up:nth-child(3) {
+            transition-delay: 0.16s
+        }
+
+        .fade-up:nth-child(4) {
+            transition-delay: 0.24s
+        }
+
+        .fade-up:nth-child(5) {
+            transition-delay: 0.32s
+        }
+
+        .fade-up:nth-child(6) {
+            transition-delay: 0.40s
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-logo">ra<em>zi</em></a>
+        <div class="nav-links">
+            <a href="#demo">Demo</a>
+            <a href="https://github.com/razi-sh/razi" target="_blank">Docs</a>
+            <a href="https://github.com/razi-sh/razi" target="_blank" class="nav-cta">GitHub →</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge fade-up">
+                <span class="dot"></span>
+                Open Source · Apache 2.0 · v1.0.0
+            </div>
+
+            <h1 class="hero-headline fade-up">
+                The notary<br>
+                <span class="dim">for</span> <span class="accent">AI decisions.</span>
+            </h1>
+
+            <p class="hero-sub fade-up">
+                Razi wraps AI reasoning inside a constraint-governed runtime that enforces policy rules, traces every
+                claim to evidence, and produces deterministic audit artifacts — replayable offline, six months later.
+            </p>
+
+            <!-- THREE BULLETS -->
+            <div class="hero-bullets">
+                <div class="bullet fade-up">
+                    <span class="bullet-icon">⚖️</span>
+                    <div class="bullet-title">Policy, not prompts</div>
+                    <div class="bullet-desc">
+                        Rules are compiled into the runtime and enforced <em>after</em> the model responds.
+                        <span class="bullet-code">policy_compliant</span> is always set by the harness — never trusted
+                        from the model.
+                    </div>
+                </div>
+                <div class="bullet fade-up">
+                    <span class="bullet-icon">🔗</span>
+                    <div class="bullet-title">Evidence-traced decisions</div>
+                    <div class="bullet-desc">
+                        Every claim is grounded in a deterministic evidence index built from your input. Hallucinated
+                        evidence IDs are caught structurally, not by hoping the model doesn't lie.
+                    </div>
+                </div>
+                <div class="bullet fade-up">
+                    <span class="bullet-icon">🔁</span>
+                    <div class="bullet-title">Replay-proof audit trail</div>
+                    <div class="bullet-desc">
+                        Every run produces an immutable artifact set. Re-evaluate schema, evidence, and policy offline
+                        with <span class="bullet-code">razi replay &lt;run_id&gt;</span> — no model call required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-actions fade-up">
+                <a href="https://github.com/razi-sh/razi" target="_blank" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="#demo" class="btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    Watch the demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALL STRIP -->
+    <div class="install-strip">
+        <div class="install-label">install</div>
+        <div class="install-cmd" onclick="copyInstall(this)" title="Click to copy">
+            <span class="prompt">$</span>
+            <span class="cmd-text">pip install razi</span>
+        </div>
+        <div class="copy-hint" id="copy-hint">click to copy</div>
+    </div>
+
+    <!-- DEMO SECTION -->
+    <section id="demo">
+        <div class="demo-header">
+            <div>
+                <div class="section-eyebrow">Interactive walkthrough</div>
+                <h2 class="section-title">See it govern<br>in real time.</h2>
+            </div>
+            <div class="demo-scroll-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+                scroll through the workflow
+            </div>
+        </div>
+
+        <div class="demo-frame-wrapper">
+            <iframe src="razi_demo.html" title="Razi interactive demo" loading="lazy"
+                allow="clipboard-read; clipboard-write"></iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            <div class="footer-logo">ra<em>zi</em></div>
+            <div class="footer-copy">Apache 2.0 · github.com/razi-sh/razi</div>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/razi-sh/razi/tree/main/docs" target="_blank">Docs</a>
+            <a href="https://github.com/razi-sh/razi/blob/main/SECURITY.md" target="_blank">Security</a>
+            <a href="https://github.com/razi-sh/razi/issues" target="_blank">Issues</a>
+            <a href="https://github.com/razi-sh/razi" target="_blank">GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        // Entrance animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Copy install command
+        function copyInstall(el) {
+            navigator.clipboard.writeText('pip install razi').then(() => {
+                const hint = document.getElementById('copy-hint');
+                hint.textContent = '✓ copied!';
+                hint.style.color = '#10b981';
+                setTimeout(() => {
+                    hint.textContent = 'click to copy';
+                    hint.style.color = '';
+                }, 1800);
+            });
+        }
+
+        // Make iframe height responsive
+        function fitIframe() {
+            const iframe = document.querySelector('.demo-frame-wrapper iframe');
+            if (!iframe) return;
+            iframe.style.height = Math.max(700, window.innerHeight) + 'px';
+        }
+        window.addEventListener('resize', fitIframe);
+        fitIframe();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razi &mdash; Deterministic Governance Harness</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap');
+
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --border: #e2e8f0;
+      --border-bright: #cbd5e1;
+      --text: #0f172a;
+      --text-dim: #475569;
+      --text-muted: #64748b;
+      --accent: #4f46e5;
+      /* Indigo */
+      --accent-glow: rgba(79, 70, 229, 0.2);
+      --accent-dim: rgba(79, 70, 229, 0.08);
+      --red: #ef4444;
+      --red-glow: rgba(239, 68, 68, 0.2);
+      --red-dim: rgba(239, 68, 68, 0.08);
+      --yellow: #f59e0b;
+      --yellow-dim: rgba(245, 158, 11, 0.1);
+      --blue: #3b82f6;
+      --blue-dim: rgba(59, 130, 246, 0.1);
+      --green: #10b981;
+      --green-dim: rgba(16, 185, 129, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03)
+    }
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+      color: var(--text)
+    }
+
+    .nav-logo span {
+      color: var(--accent)
+    }
+
+    .nav-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--accent-dim)
+    }
+
+    .slides {
+      padding-top: 72px
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 48px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)
+    }
+
+    .slide.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .slide-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+      font-weight: 500
+    }
+
+    /* HERO */
+    .slide-hero {
+      background: radial-gradient(circle at 50% -20%, rgba(79, 70, 229, 0.1) 0%, var(--bg) 60%)
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 1.0;
+      letter-spacing: -2px;
+      margin-bottom: 32px;
+      max-width: 900px;
+      color: var(--text)
+    }
+
+    .hero-title .a {
+      color: var(--accent)
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 400
+    }
+
+    /* Animated Thesis Grid */
+    .thesis {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 650px
+    }
+
+    .titem {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      transition: transform 0.3s, box-shadow 0.3s
+    }
+
+    .titem:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06)
+    }
+
+    .tlabel {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .tval {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text)
+    }
+
+    /* PROBLEM */
+    .slide-prob {
+      background: radial-gradient(circle at 90% 50%, rgba(239, 68, 68, 0.05) 0%, var(--bg) 60%)
+    }
+
+    .sec-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px
+    }
+
+    .sec-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: -1.5px;
+      margin-bottom: 48px;
+      line-height: 1.1;
+      color: var(--text)
+    }
+
+    .pgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 900px
+    }
+
+    .pcard {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02)
+    }
+
+    .pcard:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(239, 68, 68, 0.08)
+    }
+
+    .pcard::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--red);
+      opacity: 0;
+      transition: opacity 0.3s
+    }
+
+    .pcard:hover::before {
+      opacity: 1
+    }
+
+    .picon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      color: var(--red)
+    }
+
+    .ptitle {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--text)
+    }
+
+    .pdesc {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    /* Code Fragment */
+    .codefrag {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 40px;
+      max-width: 600px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      color: #f8fafc
+    }
+
+    .codefrag::before {
+      content: 'CURRENT PATTERN';
+      position: absolute;
+      top: 0;
+      left: 24px;
+      transform: translateY(-50%);
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      box-shadow: 0 4px 10px var(--red-glow)
+    }
+
+    .cl {
+      margin-bottom: 6px;
+      line-height: 1.5
+    }
+
+    .cl.r {
+      color: #fca5a5
+    }
+
+    .cl.c {
+      color: #94a3b8;
+      font-style: italic
+    }
+
+    /* DEMO */
+    .slide-demo {
+      background: radial-gradient(ellipse 80% 50% at 20% 80%, rgba(79, 70, 229, 0.06) 0%, var(--bg) 60%);
+      padding-bottom: 120px
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 40px;
+      max-width: 1150px;
+      align-items: start
+    }
+
+    .terminal-cmd {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65em;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--accent);
+      animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0
+      }
+
+      to {
+        width: 100%
+      }
+    }
+
+    @keyframes blink-caret {
+
+      from,
+      to {
+        border-color: transparent
+      }
+
+      50% {
+        border-color: var(--accent);
+      }
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04)
+    }
+
+    .ph {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface2)
+    }
+
+    .ptag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text)
+    }
+
+    .badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px
+    }
+
+    .bi {
+      background: #e0e7ff;
+      color: #4f46e5;
+      border: 1px solid rgba(79, 70, 229, 0.2)
+    }
+
+    .bp {
+      background: #dcfce7;
+      color: #16a34a;
+      border: 1px solid rgba(22, 163, 74, 0.2)
+    }
+
+    .pb {
+      padding: 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7
+    }
+
+    .fi {
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .fk {
+      color: var(--text-muted);
+      font-weight: 500
+    }
+
+    .fv {
+      color: var(--text);
+      font-weight: 600
+    }
+
+    .fv.d {
+      color: var(--red)
+    }
+
+    .fv.w {
+      color: #d97706
+    }
+
+    .fv.m {
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 400
+    }
+
+    .inote {
+      background: var(--red-dim);
+      border-left: 4px solid var(--red);
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12px;
+      color: var(--text);
+      position: relative;
+      border-radius: 0 6px 6px 0
+    }
+
+    .inote::after {
+      content: 'SENSITIVE';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 12px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      opacity: 0.8
+    }
+
+    .conn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 20px 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500
+    }
+
+    .connl {
+      width: 2px;
+      height: 24px;
+      background: linear-gradient(to bottom, var(--border-bright), transparent)
+    }
+
+    .aseq {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .att {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      background: var(--surface);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02)
+    }
+
+    .att:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06)
+    }
+
+    .att.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 12px 30px rgba(79, 70, 229, 0.1)
+    }
+
+    .ah {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      user-select: none
+    }
+
+    .anum {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      width: 70px;
+      letter-spacing: 0.05em
+    }
+
+    .astat {
+      flex: 1;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700
+    }
+
+    .atags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em
+    }
+
+    .tf {
+      background: #fee2e2;
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2)
+    }
+
+    .tw {
+      background: #fef3c7;
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.2)
+    }
+
+    .tp {
+      background: #dcfce7;
+      color: #16a34a;
+      border: 1px solid rgba(22, 163, 74, 0.2)
+    }
+
+    .ab {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.4s ease, padding 0.4s ease;
+      background: var(--surface2);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      line-height: 1.8
+    }
+
+    .ab.open {
+      max-height: 500px;
+      opacity: 1;
+      padding: 24px;
+      border-top: 1px solid var(--border)
+    }
+
+    .vi {
+      color: #ef4444;
+      font-size: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(239, 68, 68, 0.1);
+      display: flex;
+      gap: 12px;
+      align-items: baseline
+    }
+
+    .vi::before {
+      content: '¹5';
+      flex-shrink: 0;
+      font-size: 10px;
+      color: var(--red);
+      font-weight: bold
+    }
+
+    .ri {
+      color: #10b981;
+      font-size: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+      display: flex;
+      gap: 12px;
+      align-items: baseline
+    }
+
+    .ri::before {
+      content: '¹3';
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: bold
+    }
+
+    .rlabel {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 20px 0 10px
+    }
+
+    .rbox {
+      background: #1e293b;
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      font-size: 12px;
+      color: #cbd5e1;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1)
+    }
+
+    /* REPLAY */
+    .slide-rp {
+      background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, var(--bg) 60%)
+    }
+
+    .rp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 1050px;
+      align-items: start
+    }
+
+    .rp-box {
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 40px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(16, 185, 129, 0.08)
+    }
+
+    .rp-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), transparent);
+      border-radius: 16px 16px 0 0
+    }
+
+    .rptitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 28px
+    }
+
+    .rpck {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px
+    }
+
+    .rpck:last-of-type {
+      border: none
+    }
+
+    .cki {
+      width: 22px;
+      height: 22px;
+      background: #dcfce7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #16a34a;
+      flex-shrink: 0
+    }
+
+    .ckl {
+      color: var(--text);
+      flex: 1;
+      font-weight: 600
+    }
+
+    .ckv {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em
+    }
+
+    .rp-result {
+      margin-top: 32px;
+      text-align: center;
+      padding: 24px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px
+    }
+
+    .rp-pass {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 36px;
+      color: #16a34a;
+      letter-spacing: 2px
+    }
+
+    .rp-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #15803d;
+      margin-top: 8px;
+      font-weight: 500;
+      letter-spacing: 0.1em
+    }
+
+    .fo {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05)
+    }
+
+    .ofield {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      align-items: flex-start
+    }
+
+    .ofield:last-of-type {
+      border: none
+    }
+
+    .okey {
+      color: var(--text-dim);
+      font-weight: 500;
+      min-width: 150px;
+      flex-shrink: 0
+    }
+
+    .oval {
+      color: var(--text)
+    }
+
+    .oval.g {
+      color: var(--green);
+      font-weight: 700
+    }
+
+    .oval.ev {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .oval.rx {
+      color: var(--text-muted);
+      font-style: italic;
+      text-decoration: line-through
+    }
+
+    .anote {
+      padding: 14px 24px;
+      background: #f0fdfa;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #0f766e;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border-top: 1px solid #ccfbf1
+    }
+
+    /* VALUE */
+    .slide-val {
+      background: radial-gradient(circle at 50% 100%, rgba(79, 70, 229, 0.08) 0%, var(--bg) 60%)
+    }
+
+    .vgrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1050px;
+      margin-bottom: 60px
+    }
+
+    .vc {
+      background: var(--surface);
+      padding: 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03)
+    }
+
+    .vc:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(79, 70, 229, 0.08)
+    }
+
+    .vc::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+      border-radius: 16px 16px 0 0
+    }
+
+    .vc:hover::before {
+      opacity: 1
+    }
+
+    .vnum {
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 24px
+    }
+
+    .vhead {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--text)
+    }
+
+    .vdesc {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7
+    }
+
+    .cta {
+      border: 1px solid rgba(79, 70, 229, 0.1);
+      padding: 48px 56px;
+      border-radius: 16px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.1);
+      position: relative;
+      overflow: hidden
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      filter: blur(100px);
+      opacity: 0.1;
+      border-radius: 50%
+    }
+
+    .cta-t .h {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: var(--text)
+    }
+
+    .cta-t .s {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      font-weight: 400
+    }
+
+    .ctabtn {
+      flex-shrink: 0;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+      position: relative;
+      z-index: 2
+    }
+
+    .ctabtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
+      background: #4338ca
+    }
+
+    /* NAV DOTS */
+    .snav {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 100
+    }
+
+    .sdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border-bright);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      border: 2px solid transparent
+    }
+
+    .sdot:hover {
+      background: var(--text-muted)
+    }
+
+    .sdot.on {
+      background: transparent;
+      border-color: var(--accent);
+      transform: scale(1.5)
+    }
+
+    .prog {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: var(--accent);
+      transition: width 0.3s ease-out;
+      z-index: 200;
+      box-shadow: 0 0 15px var(--accent-glow)
+    }
+
+    /* STAGGER */
+    .stg>* {
+      opacity: 0;
+      transform: translateY(30px)
+    }
+
+    .stg.visible>*:nth-child(1) {
+      animation: fiu 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.1s
+    }
+
+    .stg.visible>*:nth-child(2) {
+      animation: fiu 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s
+    }
+
+    .stg.visible>*:nth-child(3) {
+      animation: fiu 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s
+    }
+
+    .stg.visible>*:nth-child(4) {
+      animation: fiu 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s
+    }
+
+    @keyframes fiu {
+      from {
+        opacity: 0;
+        transform: translateY(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes pulseb {
+
+      0%,
+      100% {
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.05);
+        border-color: rgba(16, 185, 129, 0.2)
+      }
+
+      50% {
+        box-shadow: 0 20px 50px rgba(16, 185, 129, 0.15);
+        border-color: rgba(16, 185, 129, 0.5)
+      }
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 16px 24px
+      }
+
+      .slide {
+        padding: 60px 24px
+      }
+
+      .demo-grid,
+      .rp-grid,
+      .pgrid,
+      .vgrid {
+        grid-template-columns: 1fr
+      }
+
+      .snav {
+        display: none
+      }
+
+      .thesis {
+        grid-template-columns: 1fr
+      }
+
+      .cta {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-logo">Ra<span>zi</span></div>
+    <div class="nav-tag">Live Demo</div>
+  </nav>
+
+  <div class="snav">
+    <div class="sdot on" onclick="goTo(0)"></div>
+    <div class="sdot" onclick="goTo(1)"></div>
+    <div class="sdot" onclick="goTo(2)"></div>
+    <div class="sdot" onclick="goTo(3)"></div>
+    <div class="sdot" onclick="goTo(4)"></div>
+  </div>
+
+  <div class="prog" id="prog"></div>
+
+  <div class="slides">
+
+    <!-- 01 HERO -->
+    <div class="slide slide-hero" id="s0">
+      <div class="slide-num">01 / 05</div>
+      <div class="eyebrow">Enterprise AI Governance</div>
+      <h1 class="hero-title">The model proposes.<br>The harness authorizes.</h1>
+      <p class="hero-sub">Razi wraps AI-driven reasoning inside a constraint-governed runtime that enforces schema
+        compliance, policy rules, evidence traceability, and deterministic replay.</p>
+      <div class="thesis stg">
+        <div class="titem">
+          <div class="tlabel">Runtime</div>
+          <div class="tval">Deterministic</div>
+        </div>
+        <div class="titem">
+          <div class="tlabel">Model</div>
+          <div class="tval">Proposal Engine</div>
+        </div>
+        <div class="titem">
+          <div class="tlabel">Verification</div>
+          <div class="tval">Mandatory</div>
+        </div>
+        <div class="titem">
+          <div class="tlabel">Policy</div>
+          <div class="tval">Compiled Authority</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 PROBLEM -->
+    <div class="slide slide-prob" id="s1">
+      <div class="slide-num">02 / 05</div>
+      <div class="sec-label">The Problem</div>
+      <h2 class="sec-title">AI without governance<br>is production debt.</h2>
+      <div class="pgrid stg">
+        <div class="pcard">
+          <div class="picon">&#9889;</div>
+          <div class="ptitle">Silent Hallucinations</div>
+          <div class="pdesc">Model outputs that pass basic checks but contain fabricated evidence, unsupported severity
+            classifications, or invented justifications.</div>
+        </div>
+        <div class="pcard">
+          <div class="picon">&#8635;</div>
+          <div class="ptitle">Non-Reproducible Failures</div>
+          <div class="pdesc">When an AI decision goes wrong in production, there is no trace, no replay, no way to
+            reconstruct what happened or why.</div>
+        </div>
+        <div class="pcard">
+          <div class="picon">&#128221;</div>
+          <div class="ptitle">Policy Violations</div>
+          <div class="pdesc">Internal notes leaked into customer-facing output. Severity downgrades violating SLA
+            contracts. No structural enforcement exists.</div>
+        </div>
+        <div class="pcard">
+          <div class="picon">&#128295;</div>
+          <div class="ptitle">Rebuilt Every Time</div>
+          <div class="pdesc">Every team hand-builds schema validation, retry loops, guardrails, and logging. No
+            standard. No reuse. No audit trail.</div>
+        </div>
+      </div>
+      <div class="codefrag">
+        <div class="cl c"># Today's pattern</div>
+        <div class="cl">response = openai.chat(prompt)</div>
+        <div class="cl r">output = json.loads(response) <span style="color:#94a3b8"># fingers crossed</span></div>
+        <div class="cl r">send_to_customer(output) <span style="color:#94a3b8"># no policy check</span></div>
+        <div class="cl c"># no trace. no replay. no audit.</div>
+      </div>
+    </div>
+
+    <!-- 03 DEMO -->
+    <div class="slide slide-demo" id="s2">
+      <div class="slide-num">03 / 05</div>
+      <div class="sec-label">Live Execution</div>
+      <h2 class="sec-title" style="margin-bottom:12px">
+        <span class="terminal-cmd">> razi run escalation.aispec</span><br>
+        <span
+          style="color:var(--text-dim);font-size:0.4em;font-weight:500;font-family:'DM Mono',monospace;display:inline-block;animation:fiu 1s ease forwards 2s;opacity:0">--input
+          policy_violation.json</span>
+      </h2>
+      <p style="color:var(--text-dim);font-size:15px;margin-bottom:40px;max-width:700px;line-height:1.7">Input contains
+        sensitive internal notes the model must not disclose. The harness catches failures, reprompts with combined
+        context, and converges to a compliant output in 3 attempts.</p>
+      <div class="demo-grid">
+        <div>
+          <div class="panel">
+            <div class="ph"><span class="ptag">Input Ticket</span><span class="badge bi">T-10494</span></div>
+            <div class="pb">
+              <div class="fi"><span class="fk">account_tier: </span><span class="fv">smb</span></div>
+              <div class="fi"><span class="fk">current_sev: </span><span class="fv">S2</span></div>
+              <div class="fi"><span class="fk">sla_hours: </span><span class="fv">24</span></div>
+              <div class="fi"><span class="fk">time_open: </span><span class="fv w">2h</span></div>
+              <div class="fi"><span class="fk">conversion_rate: </span><span class="fv d">0.0</span></div>
+              <div
+                style="margin-top:16px;font-size:11px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">
+                Customer message:</div>
+              <div
+                style="padding:12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;font-size:13px;margin-top:6px;color:var(--text);line-height:1.6">
+                "The new feature flag you enabled seems to have broken our sign-up flow."</div>
+              <div
+                style="margin-top:20px;font-size:11px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">
+                Internal notes:</div>
+              <div class="inote" style="line-height: 2.2;">"The new feature flag was rushed and didn't pass QA."</div>
+              <div class="inote" style="line-height: 2.2;">"I will quietly disable the buggy_feature_flag so they can
+                sign up again."</div>
+              <div style="font-size:11px;color:var(--red);margin-top:12px;font-weight:600"><span
+                  style="margin-right:6px">&#9888;</span>These must NEVER appear in customer-facing output</div>
+            </div>
+          </div>
+          <div class="conn">
+            <div class="connl"></div><span>evidence.index</span>
+            <div class="connl"></div>
+          </div>
+          <div class="panel">
+            <div class="ph"><span class="ptag">Evidence Index</span><span class="badge bi"
+                style="background:var(--surface2);border-color:var(--border-bright);color:var(--text-muted)">11
+                entries</span></div>
+            <div class="pb">
+              <div class="fi"><span class="fk">E1-E2 </span><span class="fv m">customer + usage signals</span></div>
+              <div class="fi"><span class="fk">E3-E9 </span><span class="fv m">ticket metadata fields</span></div>
+              <div class="fi"><span class="fk" style="color:var(--red)">E10-E11</span><span class="fv d"
+                  style="font-weight:700"> internal_notes &larr; governed</span></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+            <span>Synthesis Strategy</span>
+            <span style="height:1px;background:var(--border);flex:1"></span>
+            <span>max_attempts: 3</span>
+          </div>
+          <div class="aseq stg">
+            <div class="att" onclick="tog(this)">
+              <div class="ah">
+                <span class="anum">ATTEMPT 1</span>
+                <span class="astat" style="color:var(--red)">Failed</span>
+                <div class="atags"><span class="tag tf">SCHEMA</span><span class="tag tf">POLICY</span><span
+                    class="tag tf">CONFIDENCE</span></div>
+              </div>
+              <div class="ab">
+                <div
+                  style="font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-weight:700">
+                  Failures Detected</div>
+                <div class="vi">Model returned schema definition instead of a JSON instance</div>
+                <div class="vi">Evidence required rule violated: No evidence IDs cited</div>
+                <div class="vi">Minimum confidence violated: 0.0 &lt; 0.6</div>
+                <div class="rlabel">Combined Reprompt Injected</div>
+                <div class="rbox">SCHEMA ERRORS &rarr; EVIDENCE ERRORS &rarr; POLICY VIOLATIONS &rarr;
+                  CONFIDENCE<br><span style="color:#94a3b8;margin-top:8px;display:block">"You must correct ALL issues
+                    above in this response."</span></div>
+              </div>
+            </div>
+            <div class="att" onclick="tog(this)">
+              <div class="ah">
+                <span class="anum">ATTEMPT 2</span>
+                <span class="astat" style="color:#d97706">Partial</span>
+                <div class="atags"><span class="tag tw">SCHEMA</span><span class="tag tp">POLICY &#10003;</span></div>
+              </div>
+              <div class="ab">
+                <div
+                  style="font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-weight:700">
+                  Progress</div>
+                <div class="ri">Policy now compliant &mdash; evidence cited, confidence valid</div>
+                <div class="vi">Schema still malformed &mdash; harness does not accept partial success</div>
+                <div class="rlabel">Schema-only Reprompt</div>
+                <div class="rbox">Only schema error context injected.<br><span
+                    style="color:#94a3b8;margin-top:8px;display:block">"Return corrected JSON only."</span></div>
+              </div>
+            </div>
+            <div class="att" onclick="tog(this)">
+              <div class="ah">
+                <span class="anum">ATTEMPT 3</span>
+                <span class="astat" style="color:#10b981">&#10003; Accepted</span>
+                <div class="atags"><span class="tag tp">SCHEMA &#10003;</span><span class="tag tp">POLICY
+                    &#10003;</span><span class="tag tp">EVIDENCE &#10003;</span></div>
+              </div>
+              <div class="ab">
+                <div
+                  style="font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-weight:700">
+                  Final Output &mdash; Runtime Authoritative</div>
+                <div class="ri" style="color:#16a34a">recommended_severity: S2</div>
+                <div class="ri" style="color:#16a34a">confidence: 0.8</div>
+                <div class="ri" style="color:#16a34a">evidence_ids: [E1, E2, E5]</div>
+                <div class="ri" style="color:#16a34a">internal notes: NOT DISCLOSED &larr; policy held</div>
+                <div
+                  style="margin-top:20px;padding:14px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:6px;font-size:12px;color:#15803d;font-family:'DM Mono',monospace;font-weight:600">
+                  policy_compliant: true &larr; set by runtime, not model</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 REPLAY -->
+    <div class="slide slide-rp" id="s3">
+      <div class="slide-num">04 / 05</div>
+      <div class="sec-label" style="color:var(--green)">Deterministic Replay</div>
+      <h2 class="sec-title" style="margin-bottom:16px;color:var(--text)">
+        <span style="font-family:'DM Mono',monospace;font-weight:600;font-size:0.65em;color:var(--green)">razi
+          replay</span><br>
+      </h2>
+      <span
+        style="display:inline-block;padding:10px 18px;background:var(--surface);border:1px solid var(--border-bright);border-radius:8px;color:var(--text-muted);font-size:14px;font-weight:500;font-family:'DM Mono',monospace;margin-bottom:48px;box-shadow:0 4px 10px rgba(0,0,0,0.02)">escalation_qualification__20260303T152324Z__b2cc8332</span>
+
+      <p style="color:var(--text-dim);font-size:16px;margin-bottom:48px;max-width:700px;line-height:1.7">Without calling
+        the model. Six months from now. In an audit. The harness re-runs validation and policy evaluation against stored
+        artifacts and proves determinism.</p>
+
+      <div class="rp-grid stg">
+        <div class="rp-box">
+          <div class="rptitle">replay_report.json</div>
+          <div class="rpck">
+            <div class="cki">&#10003;</div><span class="ckl">schema_match</span><span class="ckv">true</span>
+          </div>
+          <div class="rpck">
+            <div class="cki">&#10003;</div><span class="ckl">policy_match</span><span class="ckv">true</span>
+          </div>
+          <div class="rpck">
+            <div class="cki">&#10003;</div><span class="ckl">template_hash_match</span><span class="ckv">true</span>
+          </div>
+          <div class="rpck">
+            <div class="cki">&#10003;</div><span class="ckl">final_output_match</span><span class="ckv">true</span>
+          </div>
+          <div class="rpck" style="border:none">
+            <div class="cki">&#10003;</div><span class="ckl">mismatches</span><span class="ckv">[]</span>
+          </div>
+          <div class="rp-result">
+            <div class="rp-pass">PASS</div>
+            <div class="rp-sub">20260303T153051Z &mdash; determinism confirmed</div>
+          </div>
+        </div>
+        <div>
+          <div class="fo">
+            <div class="ph"><span class="ptag">final_output.json</span><span class="badge bp">AUTHORITATIVE</span></div>
+            <div class="ofield"><span class="okey">recommended_severity</span><span class="oval g">S2</span></div>
+            <div class="ofield"><span class="okey">confidence</span><span class="oval"
+                style="font-weight:600">0.8</span></div>
+            <div class="ofield"><span class="okey">evidence_ids</span><span class="oval ev">["E1", "E2", "E5"]</span>
+            </div>
+            <div class="ofield"><span class="okey">justification</span><span class="oval"
+                style="font-size:13px;line-height:1.6">Customer reported feature flag broke sign-up flow. Conversion
+                rate 0.0. Maintaining S2 for prompt resolution.</span></div>
+            <div class="ofield"><span class="okey">internal_notes</span><span class="oval rx">NOT PRESENT IN
+                OUTPUT</span></div>
+            <div class="ofield"><span class="okey">policy_compliant</span><span class="oval g">true</span></div>
+            <div class="anote">policy_compliant + violations set by runtime authority, not model</div>
+          </div>
+          <div
+            style="margin-top:24px;border:1px solid var(--border-bright);border-radius:12px;padding:24px;background:var(--surface2);font-family:'DM Mono',monospace;font-size:13px;color:var(--text-dim);font-weight:500;line-height:2.2">
+            <div
+              style="font-size:10px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;font-weight:700;display:flex;align-items:center;gap:8px">
+              <span
+                style="display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 8px rgba(16,185,129,0.4)"></span>
+              Run Artifacts
+            </div>
+            <div>runs/escalation_qualification__20260303.../</div>
+            <div style="padding-left:16px;position:relative"><span
+                style="color:var(--border-bright)">&#9500;&#9472;</span> evidence_index.json</div>
+            <div style="padding-left:16px"><span style="color:var(--border-bright)">&#9500;&#9472;</span>
+              attempts/attempt_1,2,3/</div>
+            <div style="padding-left:16px"><span style="color:var(--border-bright)">&#9500;&#9472;</span>
+              final_output.json</div>
+            <div style="padding-left:16px"><span style="color:var(--border-bright)">&#9500;&#9472;</span> trace.jsonl
+            </div>
+            <div style="padding-left:16px"><span style="color:var(--border-bright)">&#9492;&#9472;</span> <span
+                style="color:var(--green);font-weight:700">replay_report.json &#10003;</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 VALUE -->
+    <div class="slide slide-val" id="s4">
+      <div class="slide-num">05 / 05</div>
+      <div class="sec-label">Why Razi</div>
+      <h2 class="sec-title">Governance baked into<br>compilation. Not convention.</h2>
+      <div class="vgrid stg">
+        <div class="vc">
+          <div class="vnum">01</div>
+          <div class="vhead">Policy is Compiled</div>
+          <div class="vdesc">Rules are not prompts or team conventions. They are compiled artifacts that the runtime
+            enforces deterministically on every run.</div>
+        </div>
+        <div class="vc">
+          <div class="vnum">02</div>
+          <div class="vhead">Replay is Structural</div>
+          <div class="vdesc">Every run produces a complete artifact set. Any decision can be replayed without calling
+            the model, months later, in an audit.</div>
+        </div>
+        <div class="vc">
+          <div class="vnum">03</div>
+          <div class="vhead">Evidence is Enforced</div>
+          <div class="vdesc">Claims without evidence IDs are rejected. Hallucinated IDs are caught. The harness, not the
+            model, is the authority.</div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="cta-t">
+          <div class="h">Ready to govern your AI workflows?</div>
+          <div class="s">Razi &mdash; Escalation Qualification. Early design partners welcome.</div>
+        </div>
+        <button class="ctabtn">Get Early Access</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.sdot');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const st = e.target.querySelector('.stg');
+          if (st) st.classList.add('visible');
+          const idx = Array.from(slides).indexOf(e.target);
+          dots.forEach((d, i) => {
+            if (i === idx) {
+              d.classList.add('on');
+            } else {
+              d.classList.remove('on');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.25 });
+    slides.forEach(s => io.observe(s));
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('prog').style.width = (window.scrollY / t * 100) + '%';
+    });
+    function goTo(i) { document.getElementById('s' + i).scrollIntoView({ behavior: 'smooth' }) }
+    function tog(el) {
+      const b = el.querySelector('.ab');
+      const was = b.classList.contains('open');
+      document.querySelectorAll('.ab').forEach(x => {
+        x.classList.remove('open');
+        x.parentElement.classList.remove('active');
+      });
+      if (!was) {
+        b.classList.add('open');
+        el.classList.add('active');
+      }
+    }
+    setTimeout(() => { const f = document.querySelector('.att'); if (f) tog(f); }, 1200);
+  </script>
+</body>
+
+</html>
