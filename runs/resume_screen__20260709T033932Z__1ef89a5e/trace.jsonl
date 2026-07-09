@@ -1,0 +1,12 @@
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "step_start", "step_id": "evidence", "attempt": null}
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "artifact_written", "step_id": "evidence", "attempt": null, "path": "/Users/ehsan/Desktop/github/razi/runs/resume_screen__20260709T033932Z__1ef89a5e/evidence_index.json"}
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "step_end", "step_id": "evidence", "attempt": null}
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "step_start", "step_id": "synthesis", "attempt": null}
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "attempt_start", "step_id": "synthesis", "attempt": 1}
+{"timestamp": "20260709T033932Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/resume_screen__20260709T033932Z__1ef89a5e/attempts/attempt_1/prompt.txt"}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/resume_screen__20260709T033932Z__1ef89a5e/attempts/attempt_1/model_raw.txt"}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/resume_screen__20260709T033932Z__1ef89a5e/attempts/attempt_1/parsed_model_output.json"}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/resume_screen__20260709T033932Z__1ef89a5e/attempts/attempt_1/policy_eval.json"}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "policy_evaluated", "step_id": "synthesis", "attempt": 1, "compliant": true, "violations": []}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "attempt_end", "step_id": "synthesis", "attempt": 1}
+{"timestamp": "20260709T033938Z", "run_id": "resume_screen__20260709T033932Z__1ef89a5e", "event_type": "step_end", "step_id": "synthesis", "attempt": null}

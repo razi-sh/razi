@@ -1,0 +1,12 @@
+{
+  "triage_level": "ESI-2 (emergent)",
+  "justification": "BP 158/96 is elevated, HR 104 is tachycardic, and SpO2 94% indicates potential respiratory compromise. The patient's symptoms of crushing substernal chest pain radiating to the left arm with onset 40 minutes ago and diaphoretic state suggest acute coronary syndrome.",
+  "evidence_ids": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+  ],
+  "confidence": 0.95
+}

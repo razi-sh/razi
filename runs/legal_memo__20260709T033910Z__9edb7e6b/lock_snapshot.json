@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/legal_memo.txt",
+  "template_sha256": "44c9d466ef2d680ad4e78e018bb0028216bcc4892af6dae9124981144984427d",
+  "spec_hash": "fdef9507ba16014efb05294cd28f2dee837ade52c2f3c9c76b7b77160e118bac",
+  "input_schema_hash": "65d7c557aa65870cd850bc7c31d4c02eeb963e40610aa36e95a9e55139f89137",
+  "output_schema_hash": "f3bb41815f6a8ef55e97cec91207281fd80e815741b77e359ca49b02f67362bd"
+}

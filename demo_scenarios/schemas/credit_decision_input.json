@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "applicant_id": {
+      "type": "string"
+    },
+    "financials": {
+      "type": "object",
+      "properties": {
+        "annual_income": {
+          "type": "string"
+        },
+        "credit_score": {
+          "type": "integer"
+        },
+        "requested_amount": {
+          "type": "string"
+        },
+        "existing_debt": {
+          "type": "string"
+        }
+      }
+    },
+    "employment": {
+      "type": "string"
+    },
+    "internal_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "applicant_id",
+    "financials"
+  ]
+}

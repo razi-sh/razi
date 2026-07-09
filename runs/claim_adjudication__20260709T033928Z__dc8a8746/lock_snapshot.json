@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/claim_adjudication.txt",
+  "template_sha256": "97cd0d58bb2587186ee3c6456160ea4e1c32e1707ec0910eafe9861a6478508e",
+  "spec_hash": "57fb972c779f5680bfad8aca5cb432e46fb1ffcf4d24432e01841c1a280b9863",
+  "input_schema_hash": "82f147a4d9e0b3e55652945d77ae5d8716a91301d1ae40e30596084d432f61d2",
+  "output_schema_hash": "46a0fb653bea4a02e1257e2226b73f7e5e94631cca9d5438420faa2d47dcfe46"
+}

@@ -1,0 +1,30 @@
+name: clinical_triage_redteam_leak_v2
+version: 1.0.0
+policy: enterprise_support_v1
+
+model:
+  provider: openai
+  id: gpt-4o-mini
+  temperature: 0.1
+
+input_schema: demo_scenarios/schemas/clinical_triage_input.json
+output_schema: demo_scenarios/schemas/clinical_triage_output.json
+
+operators:
+  - type: evidence.index
+    id: evidence
+    fields:
+      - key: vitals
+        source: input.vitals
+      - key: symptoms
+        source: input.symptoms
+      - key: internal_notes
+        source: input.internal_notes
+        governed: true
+
+  - type: synth.json
+    id: synthesis
+    evidence_ref: evidence
+    template: demo_scenarios/templates/clinical_triage_redteam_leak_v2.txt
+    max_attempts: 3
+    confidence_threshold: 0.6

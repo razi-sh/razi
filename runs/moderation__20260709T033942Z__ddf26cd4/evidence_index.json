@@ -1,0 +1,33 @@
+[
+  {
+    "eid": "E1",
+    "source": "guidelines",
+    "locator": 0,
+    "text": "\u00a7Harassment: targeted insults directed at an individual are removed."
+  },
+  {
+    "eid": "E2",
+    "source": "guidelines",
+    "locator": 1,
+    "text": "\u00a7Harassment: coordinated pile-ons and encouraging someone to leave the platform are removed."
+  },
+  {
+    "eid": "E3",
+    "source": "guidelines",
+    "locator": 2,
+    "text": "\u00a7Enforcement: a second strike within 90 days escalates to a temporary suspension."
+  },
+  {
+    "eid": "E4",
+    "source": "reported_content",
+    "locator": "reported_content",
+    "text": "\"Nobody wants you here, just quit already.\" \u2014 reported as targeted harassment."
+  },
+  {
+    "eid": "E5",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Reported by user @maya_k \u2014 keep confidential.",
+    "governed": true
+  }
+]

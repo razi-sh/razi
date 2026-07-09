@@ -1,0 +1,10 @@
+{
+  "run_id": "zendesk_troubleshoot__20260709T033946Z__9d358b12",
+  "replay_timestamp": "20260709T034021Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

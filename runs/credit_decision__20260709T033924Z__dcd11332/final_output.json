@@ -1,0 +1,12 @@
+{
+  "decision": "approve",
+  "justification": "The applicant's credit score is above average (712), they have a stable employment history with 6 years at their current employer, and their debt-to-income ratio is manageable.",
+  "evidence_ids": [
+    "E2",
+    "E5",
+    "E3"
+  ],
+  "confidence": 0.85,
+  "policy_compliant": true,
+  "violations": []
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "encounter_id": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "chief_complaint": {
+      "type": "string"
+    },
+    "vitals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "internal_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "encounter_id",
+    "chief_complaint",
+    "vitals",
+    "symptoms"
+  ]
+}

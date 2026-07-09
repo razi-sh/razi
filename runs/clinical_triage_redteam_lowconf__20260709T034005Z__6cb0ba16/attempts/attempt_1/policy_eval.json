@@ -1,0 +1,6 @@
+{
+  "compliant": false,
+  "violations": [
+    "min_confidence: 0.4 is below threshold 0.6"
+  ]
+}

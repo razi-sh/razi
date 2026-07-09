@@ -1,0 +1,6 @@
+{
+  "decision": "deny",
+  "justification": "The claim is denied due to the burst pipe being a gradual seepage, which is excluded under policy clause §9.",
+  "evidence_ids": ["E1", "E2", "E3"],
+  "confidence": 0.95
+}

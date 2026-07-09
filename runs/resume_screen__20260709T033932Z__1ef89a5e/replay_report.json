@@ -1,0 +1,10 @@
+{
+  "run_id": "resume_screen__20260709T033932Z__1ef89a5e",
+  "replay_timestamp": "20260709T034020Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

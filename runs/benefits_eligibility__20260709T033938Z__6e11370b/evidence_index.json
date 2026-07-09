@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "program_rules",
+    "locator": 0,
+    "text": "Gross monthly income limit for a household of 3: $2,798 (130% of the federal poverty level)."
+  },
+  {
+    "eid": "E2",
+    "source": "program_rules",
+    "locator": 1,
+    "text": "Net income limit for a household of 3: $2,152 (100% of the federal poverty level)."
+  },
+  {
+    "eid": "E3",
+    "source": "program_rules",
+    "locator": 2,
+    "text": "An excess shelter deduction applies when housing costs exceed half of adjusted income."
+  },
+  {
+    "eid": "E4",
+    "source": "household",
+    "locator": 0,
+    "text": "Household of 3 with one dependent under 6"
+  },
+  {
+    "eid": "E5",
+    "source": "household",
+    "locator": 1,
+    "text": "Gross monthly income $2,100; rent $1,300"
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Suspect the partner is living there undeclared \u2014 no proof yet.",
+    "governed": true
+  }
+]

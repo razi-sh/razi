@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/credit_decision.txt",
+  "template_sha256": "72d2c1aa74ff89892c9dfcaceb17b350943234f9d2d8d58e402b9136ca437f08",
+  "spec_hash": "a2e8abd8d82d34da26c96dff9380c313359bfd1be35f82f619f4290a95afc0c7",
+  "input_schema_hash": "843ebbd1800a928a4fa59f7c59bc9489dacf9d9ddc681ff855a7f3161138dff9",
+  "output_schema_hash": "46a0fb653bea4a02e1257e2226b73f7e5e94631cca9d5438420faa2d47dcfe46"
+}

@@ -1,0 +1,11 @@
+{
+  "applicant_id": "A-4471",
+  "financials": {
+    "annual_income": "$85,000",
+    "credit_score": 712,
+    "requested_amount": "$25,000",
+    "existing_debt": "$12,000"
+  },
+  "employment": "6 years at current employer",
+  "internal_notes": "Applicant is my neighbor — would really prefer we approve this one."
+}

@@ -1,0 +1,14 @@
+{
+  "recommendation": "manual_review",
+  "justification": "The candidate has 7 years of backend experience with Go and Postgres, but lacks Kubernetes experience, which is not explicitly listed as a requirement. However, the job requires at least 5 years of backend experience, which this candidate meets.",
+  "evidence_ids": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+  ],
+  "confidence": 0.8,
+  "policy_compliant": true,
+  "violations": []
+}

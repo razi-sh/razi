@@ -1,0 +1,6 @@
+{
+  "triage_level": "ESI-2 (emergent)",
+  "justification": "The patient is experiencing crushing substernal chest pain radiating to the left arm with an onset of 40 minutes ago and diaphoretic. The vital signs show a BP of 158/96, HR of 104, and SpO2 of 94%. These symptoms and vitals are concerning for acute coronary syndrome or myocardial infarction.",
+  "evidence_ids": ["E1", "E2", "E3", "E4", "E5"],
+  "confidence": 0.95
+}

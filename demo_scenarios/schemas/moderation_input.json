@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "report_id": {
+      "type": "string"
+    },
+    "surface": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "prior_strikes": {
+      "type": "integer"
+    },
+    "guidelines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reported_content": {
+      "type": "string"
+    },
+    "internal_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "guidelines",
+    "reported_content"
+  ]
+}

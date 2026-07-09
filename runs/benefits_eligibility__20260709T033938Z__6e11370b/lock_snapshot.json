@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/benefits_eligibility.txt",
+  "template_sha256": "236acbc53b15292a7a079bc1809cafb8659178c94df5e1bbd22599d073b37c4d",
+  "spec_hash": "eb3e932f36930a8609fd13e8616c19ff383f1bcebfd8fa355f89a59419954aa8",
+  "input_schema_hash": "9ff8310a6d7d74418cfe8ed17c6c511916037228962b25ab6b3a6b4925dffad6",
+  "output_schema_hash": "45b1429ab20c1fbdfbd9481f9ea5aca0334e1ec2539072594f4055df0544fbc9"
+}

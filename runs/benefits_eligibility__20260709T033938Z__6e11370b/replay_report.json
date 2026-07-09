@@ -1,0 +1,10 @@
+{
+  "run_id": "benefits_eligibility__20260709T033938Z__6e11370b",
+  "replay_timestamp": "20260709T034018Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

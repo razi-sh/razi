@@ -1,0 +1,7 @@
+{
+  "category": "checkout",
+  "escalate": true,
+  "justification": "The issue is described as a P1 for the customer and has been ongoing since morning, indicating it's urgent and system-wide.",
+  "evidence_ids": ["E1", "E2", "E3", "E4", "E5"],
+  "confidence": 0.9
+}

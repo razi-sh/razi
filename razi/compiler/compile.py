@@ -54,7 +54,9 @@ def compile_spec(spec_path: str, base_dir: Path) -> Path:
         input_hash=input_hash,
         output_hash=output_hash,
         template_hash=template_hash,
-        template_path=ir['template']
+        template_path=ir['template'],
+        input_schema_path=ir['input_schema'],
+        output_schema_path=ir['output_schema']
     )
     with open(build_dir / "lock.json", "w") as f:
         json.dump(lock, f, indent=2)

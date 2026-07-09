@@ -1,0 +1,32 @@
+name: legal_memo
+version: 1.0.0
+policy: enterprise_support_v1
+
+model:
+  provider: openai
+  id: gpt-4o-mini
+  temperature: 0.1
+
+input_schema: demo_scenarios/schemas/legal_memo_input.json
+output_schema: demo_scenarios/schemas/legal_memo_output.json
+
+operators:
+  - type: evidence.index
+    id: evidence
+    fields:
+      - key: corpus
+        source: input.corpus
+      - key: facts
+        source: input.facts
+      - key: question
+        source: input.question
+      - key: internal_notes
+        source: input.internal_notes
+        governed: true
+
+  - type: synth.json
+    id: synthesis
+    evidence_ref: evidence
+    template: demo_scenarios/templates/legal_memo.txt
+    max_attempts: 3
+    confidence_threshold: 0.6

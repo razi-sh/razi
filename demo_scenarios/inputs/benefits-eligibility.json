@@ -1,0 +1,14 @@
+{
+  "case_id": "G-55190",
+  "program": "SNAP",
+  "program_rules": [
+    "Gross monthly income limit for a household of 3: $2,798 (130% of the federal poverty level).",
+    "Net income limit for a household of 3: $2,152 (100% of the federal poverty level).",
+    "An excess shelter deduction applies when housing costs exceed half of adjusted income."
+  ],
+  "household": [
+    "Household of 3 with one dependent under 6",
+    "Gross monthly income $2,100; rent $1,300"
+  ],
+  "internal_notes": "Suspect the partner is living there undeclared — no proof yet."
+}

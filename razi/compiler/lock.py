@@ -7,7 +7,9 @@ def generate_lockfile(
     input_hash: str,
     output_hash: str,
     template_hash: str,
-    template_path: str
+    template_path: str,
+    input_schema_path: str = "",
+    output_schema_path: str = ""
 ) -> Dict[str, Any]:
     """Generate the deterministic build lockfile."""
     model = raw_spec.get("model", {})
@@ -20,5 +22,7 @@ def generate_lockfile(
         "template_sha256": template_hash,
         "spec_hash": spec_hash,
         "input_schema_hash": input_hash,
-        "output_schema_hash": output_hash
+        "output_schema_hash": output_hash,
+        "input_schema_path": input_schema_path,
+        "output_schema_path": output_schema_path
     }

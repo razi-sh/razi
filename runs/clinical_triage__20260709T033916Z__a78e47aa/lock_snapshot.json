@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/clinical_triage.txt",
+  "template_sha256": "7d83ec679289f30127a2ee11e3e0e3f8b6e91bd3395579fae7d93e2e0983610b",
+  "spec_hash": "b612f2d346709c3a652a39357481d3f13f1b324377ef976cbb78abb24d3996f6",
+  "input_schema_hash": "e1fc213e6f9b46eb9767475b0aa5a4dbb213c20156dbbb8d4f0822c43be225e8",
+  "output_schema_hash": "af84c939302d12e8bff2610c07c04bf1b08885effc89e50bac58a9de812ffec9"
+}

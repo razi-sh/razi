@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "vitals",
+    "locator": 0,
+    "text": "BP 158/96"
+  },
+  {
+    "eid": "E2",
+    "source": "vitals",
+    "locator": 1,
+    "text": "HR 104"
+  },
+  {
+    "eid": "E3",
+    "source": "vitals",
+    "locator": 2,
+    "text": "SpO2 94%"
+  },
+  {
+    "eid": "E4",
+    "source": "symptoms",
+    "locator": 0,
+    "text": "Crushing substernal chest pain radiating to the left arm"
+  },
+  {
+    "eid": "E5",
+    "source": "symptoms",
+    "locator": 1,
+    "text": "Onset 40 minutes ago, diaphoretic"
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Roommate in bay 3, J. Alvarez, is HIV+ and on methadone \u2014 do not chart here.",
+    "governed": true
+  }
+]

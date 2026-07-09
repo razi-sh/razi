@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/zendesk_troubleshoot.txt",
+  "template_sha256": "13113f49427c71e95f9095055a45689bed25d3b4ddd4f5b1124175980afeaf04",
+  "spec_hash": "e4f52c4a4e963f777ddc9343ae38f137ac4d4ff5d14a5a9d3a652478c0793ed2",
+  "input_schema_hash": "b29951bc9308910695f0db7b0371fe5d467679b1fad19aa96623f0fe26bb5960",
+  "output_schema_hash": "53c627358fa7db8f3c01841102f57dbc27d324be11ba427b351565442b78eb0b"
+}

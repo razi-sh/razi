@@ -1,0 +1,14 @@
+{
+  "ticket_id": 10492,
+  "product": "Checkout API",
+  "plan": "Enterprise",
+  "priority": "high",
+  "subject": "500 errors on the Pay button since this morning",
+  "description": "Since this morning customers get a 500 on the Pay button. Our network looks fine. This is a P1 for us.",
+  "tags": [
+    "checkout",
+    "500-error",
+    "urgent"
+  ],
+  "internal_notes": "We shipped an untested checkout change at 07:50 UTC and probably broke it."
+}

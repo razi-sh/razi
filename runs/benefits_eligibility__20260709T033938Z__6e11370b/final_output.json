@@ -1,0 +1,12 @@
+{
+  "determination": "ineligible",
+  "justification": "The household's gross monthly income of $2,100 exceeds the limit for a household of three ($2,798), as per program rule E1.",
+  "evidence_ids": [
+    "E4",
+    "E5",
+    "E1"
+  ],
+  "confidence": 0.9,
+  "policy_compliant": true,
+  "violations": []
+}

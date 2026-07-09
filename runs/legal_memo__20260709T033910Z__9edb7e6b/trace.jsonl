@@ -1,0 +1,12 @@
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "step_start", "step_id": "evidence", "attempt": null}
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "artifact_written", "step_id": "evidence", "attempt": null, "path": "/Users/ehsan/Desktop/github/razi/runs/legal_memo__20260709T033910Z__9edb7e6b/evidence_index.json"}
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "step_end", "step_id": "evidence", "attempt": null}
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "step_start", "step_id": "synthesis", "attempt": null}
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "attempt_start", "step_id": "synthesis", "attempt": 1}
+{"timestamp": "20260709T033910Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/legal_memo__20260709T033910Z__9edb7e6b/attempts/attempt_1/prompt.txt"}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/legal_memo__20260709T033910Z__9edb7e6b/attempts/attempt_1/model_raw.txt"}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/legal_memo__20260709T033910Z__9edb7e6b/attempts/attempt_1/parsed_model_output.json"}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "artifact_written", "step_id": "synthesis", "attempt": 1, "path": "/Users/ehsan/Desktop/github/razi/runs/legal_memo__20260709T033910Z__9edb7e6b/attempts/attempt_1/policy_eval.json"}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "policy_evaluated", "step_id": "synthesis", "attempt": 1, "compliant": true, "violations": []}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "attempt_end", "step_id": "synthesis", "attempt": 1}
+{"timestamp": "20260709T033916Z", "run_id": "legal_memo__20260709T033910Z__9edb7e6b", "event_type": "step_end", "step_id": "synthesis", "attempt": null}

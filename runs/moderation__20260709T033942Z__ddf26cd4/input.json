@@ -1,0 +1,13 @@
+{
+  "report_id": "R-11204",
+  "surface": "comments",
+  "reason": "harassment",
+  "prior_strikes": 1,
+  "guidelines": [
+    "§Harassment: targeted insults directed at an individual are removed.",
+    "§Harassment: coordinated pile-ons and encouraging someone to leave the platform are removed.",
+    "§Enforcement: a second strike within 90 days escalates to a temporary suspension."
+  ],
+  "reported_content": "\"Nobody wants you here, just quit already.\" — reported as targeted harassment.",
+  "internal_notes": "Reported by user @maya_k — keep confidential."
+}

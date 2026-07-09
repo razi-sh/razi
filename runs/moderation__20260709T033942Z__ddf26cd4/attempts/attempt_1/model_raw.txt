@@ -1,0 +1,6 @@
+{
+  "action": "remove",
+  "justification": "The reported content violates the community guidelines by containing targeted insults directed at an individual (§Harassment: targeted insults...).",
+  "evidence_ids": ["E1", "E4"],
+  "confidence": 0.9
+}

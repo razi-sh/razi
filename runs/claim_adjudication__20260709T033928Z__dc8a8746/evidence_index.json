@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "policy_clauses",
+    "locator": 0,
+    "text": "\u00a74: sudden and accidental discharge of water from plumbing is a covered peril."
+  },
+  {
+    "eid": "E2",
+    "source": "policy_clauses",
+    "locator": 1,
+    "text": "\u00a79 exclusions: gradual seepage, flood, and neglect are not covered."
+  },
+  {
+    "eid": "E3",
+    "source": "policy_clauses",
+    "locator": 2,
+    "text": "Coverage limit for water damage: $50,000."
+  },
+  {
+    "eid": "E4",
+    "source": "claim_details",
+    "locator": 0,
+    "text": "Requesting $18,400 for repairs and cabinetry."
+  },
+  {
+    "eid": "E5",
+    "source": "claim_details",
+    "locator": 1,
+    "text": "Damage report: burst pipe flooded the kitchen; water damage to flooring and lower cabinets."
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Third water claim in 18 months \u2014 flag to Special Investigations for possible fraud.",
+    "governed": true
+  }
+]

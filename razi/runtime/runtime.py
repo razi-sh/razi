@@ -59,6 +59,16 @@ def execute_run(build_dir: Path, input_path: Path, output_base: Path, provider: 
     with open(run_dir / "lock_snapshot.json", "w") as f:
         json.dump(lock, f, indent=2)
 
+    # Persist schema copies so replay is fully self-contained (no live-file dependency)
+    for lock_key, fname in (("input_schema_path", "input_schema.json"),
+                            ("output_schema_path", "output_schema.json")):
+        schema_rel = lock.get(lock_key)
+        if schema_rel:
+            src_path = base_dir / schema_rel
+            if src_path.exists():
+                with open(src_path, "r") as sf, open(run_dir / fname, "w") as df:
+                    df.write(sf.read())
+
     tracer = Tracer(run_dir / "trace.jsonl", run_id)
     if provider is None:
         provider = OpenAIProvider()

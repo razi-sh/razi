@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "resume",
+    "locator": 0,
+    "text": "7 years backend engineering (Go, Postgres)"
+  },
+  {
+    "eid": "E2",
+    "source": "resume",
+    "locator": 1,
+    "text": "Led a payments platform at scale"
+  },
+  {
+    "eid": "E3",
+    "source": "resume",
+    "locator": 2,
+    "text": "BS in Computer Science"
+  },
+  {
+    "eid": "E4",
+    "source": "resume",
+    "locator": 3,
+    "text": "No Kubernetes experience listed"
+  },
+  {
+    "eid": "E5",
+    "source": "requirements",
+    "locator": "requirements",
+    "text": "Senior Backend Engineer: minimum 5 years of backend experience"
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Referred by the CTO's friend \u2014 try to push this one through.",
+    "governed": true
+  }
+]

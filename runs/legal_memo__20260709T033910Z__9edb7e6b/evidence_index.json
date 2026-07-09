@@ -1,0 +1,45 @@
+[
+  {
+    "eid": "E1",
+    "source": "corpus",
+    "locator": 0,
+    "text": "Cal. Bus. & Prof. Code \u00a716600: every contract by which anyone is restrained from engaging in a lawful profession, trade, or business is to that extent void."
+  },
+  {
+    "eid": "E2",
+    "source": "corpus",
+    "locator": 1,
+    "text": "Edwards v. Arthur Andersen LLP, 44 Cal. 4th 937 (2008): \u00a716600 voids employee non-competes; California recognizes no narrow-restraint exception."
+  },
+  {
+    "eid": "E3",
+    "source": "corpus",
+    "locator": 2,
+    "text": "Cal. Bus. & Prof. Code \u00a716600.5 (2024): non-competes are void regardless of where signed; employers face notice obligations."
+  },
+  {
+    "eid": "E4",
+    "source": "corpus",
+    "locator": 3,
+    "text": "AMN Healthcare, Inc. v. Aya Healthcare Servs., Inc., 28 Cal. App. 5th 923 (2018): employee non-solicitation provisions are scrutinized under \u00a716600."
+  },
+  {
+    "eid": "E5",
+    "source": "facts",
+    "locator": 0,
+    "text": "Employee signed the agreement in California; \u00a77 contains a 12-month statewide non-compete."
+  },
+  {
+    "eid": "E6",
+    "source": "question",
+    "locator": "question",
+    "text": "Is the non-compete in \u00a77 of the employment agreement enforceable in California?"
+  },
+  {
+    "eid": "E7",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Client admitted the non-compete was backdated after termination \u2014 keep this out of anything discoverable.",
+    "governed": true
+  }
+]

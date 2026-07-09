@@ -1,0 +1,11 @@
+{
+  "position": "likely unenforceable",
+  "justification": "California law voids employee non-competes under Cal. Bus. & Prof. Code \u00a716600 (E1), and the Edwards v. Arthur Andersen LLP case (E2) specifically states that \u00a716600 voids such provisions, with no narrow-restraint exception.",
+  "evidence_ids": [
+    "E1",
+    "E2"
+  ],
+  "confidence": 0.95,
+  "policy_compliant": true,
+  "violations": []
+}

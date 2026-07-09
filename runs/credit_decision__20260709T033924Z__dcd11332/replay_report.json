@@ -1,0 +1,10 @@
+{
+  "run_id": "credit_decision__20260709T033924Z__dcd11332",
+  "replay_timestamp": "20260709T034019Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

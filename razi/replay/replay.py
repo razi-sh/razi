@@ -12,6 +12,44 @@ from .store import RunStore
 class ReplayMismatch(Exception):
     pass
 
+_SKIP_DIRS = {"runs", "build", ".git", "node_modules", "__pycache__", "__MACOSX", ".venv", "venv"}
+
+
+def _resolve_output_schema(run_dir: Path, base_dir: Path, lock: dict):
+    """
+    Locate the output schema for replay, in order of preference:
+      1. The copy persisted inside the run directory (fully offline, new runs).
+      2. The path recorded in the lockfile (new lockfiles).
+      3. A hash-match search under base_dir (repairs runs recorded before
+         schema paths were persisted).
+      4. The legacy hardcoded example path (very old runs).
+    The caller still verifies the resolved file's hash against the lockfile,
+    so a wrong candidate can never silently pass.
+    """
+    persisted = run_dir / "output_schema.json"
+    if persisted.exists():
+        return persisted
+
+    locked_path = lock.get("output_schema_path")
+    if locked_path:
+        candidate = base_dir / locked_path
+        if candidate.exists():
+            return candidate
+
+    target_hash = lock.get("output_schema_hash")
+    if target_hash:
+        for candidate in sorted(base_dir.rglob("*.json")):
+            if any(part in _SKIP_DIRS for part in candidate.relative_to(base_dir).parts):
+                continue
+            try:
+                if hash_file(candidate) == target_hash:
+                    return candidate
+            except OSError:
+                continue
+
+    legacy = base_dir / "examples" / "schemas" / "escalation_decision.schema.json"
+    return legacy if legacy.exists() else None
+
 def execute_replay(run_dir: Path, base_dir: Path, ignore_template_drift: bool = False):
     """
     Deterministically re-validates a stored run without calling the LLM.
@@ -41,10 +79,8 @@ def execute_replay(run_dir: Path, base_dir: Path, ignore_template_drift: bool = 
     
     schema_matched = False
     try:
-        # Re-evaluating Schema requires the schema. The lockfile only has the hash.
-        # This is a v1 limitation: we'll load the live schema and verify its hash matches lock, then validate.
-        output_schema_path = base_dir / "examples" / "schemas" / "escalation_decision.schema.json"
-        if not output_schema_path.exists():
+        output_schema_path = _resolve_output_schema(run_dir, base_dir, lock)
+        if output_schema_path is None:
              mismatches.append("Could not locate output schema to re-validate.")
         else:
              live_schema_hash = hash_file(output_schema_path)

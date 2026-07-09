@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "subject",
+    "locator": "subject",
+    "text": "500 errors on the Pay button since this morning"
+  },
+  {
+    "eid": "E2",
+    "source": "description",
+    "locator": "description",
+    "text": "Since this morning customers get a 500 on the Pay button. Our network looks fine. This is a P1 for us."
+  },
+  {
+    "eid": "E3",
+    "source": "tags",
+    "locator": 0,
+    "text": "checkout"
+  },
+  {
+    "eid": "E4",
+    "source": "tags",
+    "locator": 1,
+    "text": "500-error"
+  },
+  {
+    "eid": "E5",
+    "source": "tags",
+    "locator": 2,
+    "text": "urgent"
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "We shipped an untested checkout change at 07:50 UTC and probably broke it.",
+    "governed": true
+  }
+]

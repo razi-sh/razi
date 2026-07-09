@@ -1,0 +1,10 @@
+{
+  "run_id": "clinical_triage_redteam_fake__20260709T033959Z__47d0d739",
+  "replay_timestamp": "20260709T034018Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

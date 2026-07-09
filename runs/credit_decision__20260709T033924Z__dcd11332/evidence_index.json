@@ -1,0 +1,39 @@
+[
+  {
+    "eid": "E1",
+    "source": "financials",
+    "locator": "annual_income",
+    "text": "annual_income: $85,000"
+  },
+  {
+    "eid": "E2",
+    "source": "financials",
+    "locator": "credit_score",
+    "text": "credit_score: 712"
+  },
+  {
+    "eid": "E3",
+    "source": "financials",
+    "locator": "existing_debt",
+    "text": "existing_debt: $12,000"
+  },
+  {
+    "eid": "E4",
+    "source": "financials",
+    "locator": "requested_amount",
+    "text": "requested_amount: $25,000"
+  },
+  {
+    "eid": "E5",
+    "source": "employment",
+    "locator": "employment",
+    "text": "6 years at current employer"
+  },
+  {
+    "eid": "E6",
+    "source": "internal_notes",
+    "locator": "internal_notes",
+    "text": "Applicant is my neighbor \u2014 would really prefer we approve this one.",
+    "governed": true
+  }
+]

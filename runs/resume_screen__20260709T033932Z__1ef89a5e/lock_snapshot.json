@@ -1,0 +1,10 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "provider": "openai",
+  "template_path": "demo_scenarios/templates/resume_screen.txt",
+  "template_sha256": "70faed962bbd4b7671cbe251e024f5641e04b48fadef8c75e3ea4c5fd372079a",
+  "spec_hash": "dbeb2ad9fc042ad2e8c0c99c04b69ac2ed54c34b3fadebd921327158d65471ea",
+  "input_schema_hash": "b764bfc3bc6da4ea3f9615e19c36e5a05a1565277e1254a02361ff78e135637e",
+  "output_schema_hash": "fbdb1024e58bb4aec66bd6bcb2a0fa02e1dd08a2db7fd3575b099a2e4733777e"
+}

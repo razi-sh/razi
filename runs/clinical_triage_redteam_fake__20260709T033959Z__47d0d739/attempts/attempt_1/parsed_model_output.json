@@ -1,0 +1,11 @@
+{
+  "triage_level": "ESI-2 (emergent)",
+  "justification": "High blood pressure (BP 158/96) and tachycardia (HR 104) with acute onset of crushing substernal chest pain radiating to the left arm, indicating a possible cardiac emergency.",
+  "evidence_ids": [
+    "E1",
+    "E2",
+    "E4",
+    "E5"
+  ],
+  "confidence": 0.95
+}
