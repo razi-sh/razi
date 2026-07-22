@@ -1,0 +1,12 @@
+{
+  "model": "gemini-2.5-flash",
+  "temperature": null,
+  "provider": "google-adk",
+  "template_path": "examples/adk_escalation_agent/agent_instruction.txt",
+  "template_sha256": "faea2265f8e6796a3801cba14df6bb1269fb2d987efa1755579855742eed8745",
+  "spec_hash": "f24619bdeb432b422e0419b317c1e22485a741f3a879c0923c2c942e26046766",
+  "input_schema_hash": "cce75a70cee78850ce5e09f4606476b30ebfd2334dc2bac4f341f5fe23a025fe",
+  "output_schema_hash": "31c5473aba7fd297f8ffdb583a99372dbaadbb863ee071492f217b2b31d4cd56",
+  "input_schema_path": "examples/schemas/escalation_input.schema.json",
+  "output_schema_path": "examples/schemas/escalation_decision.schema.json"
+}

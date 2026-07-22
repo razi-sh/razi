@@ -1,0 +1,10 @@
+{
+  "run_id": "escalation_agent_redteam_leak__20260722T021404Z__fdded8be",
+  "replay_timestamp": "20260722T021410Z",
+  "schema_match": true,
+  "policy_match": true,
+  "template_hash_match": true,
+  "final_output_match": true,
+  "result": "PASS",
+  "mismatches": []
+}

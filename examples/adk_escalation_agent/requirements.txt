@@ -1,0 +1,12 @@
+# Google Agent Development Kit + Gemini SDK. Pinned to the major version
+# this example was built and tested against (google-adk 2.5.0); ADK's
+# callback contract (before_tool_callback/after_tool_callback semantics)
+# has changed across pre-1.0 releases in the past, so don't casually widen
+# this range without re-testing razi_adapter.py against the new version.
+google-adk>=2.5,<3.0
+
+# Razi itself is not listed here -- install it from the repo root instead:
+#   pip install -e .
+# (this example imports `razi.evidence`, `razi.policy`, `razi.runtime.trace`
+# directly, as a library, and needs the local checkout, not the PyPI release,
+# if you're modifying core alongside this example).

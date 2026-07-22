@@ -1,0 +1,6 @@
+{
+  "compliant": false,
+  "violations": [
+    "no_internal_disclosure: Justification contains exact text from 'internal_notes'."
+  ]
+}
