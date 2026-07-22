@@ -157,6 +157,20 @@ any browser, no server or build step required.
 
 ## Known Limitations
 
+- **Evidence citations are checked for existence, not for support.** `evaluate_policy`'s
+  `evidence_required`/`no_hallucinated_evidence` rules only verify that a cited `evidence_id` exists in
+  the evidence index -- they never check that the evidence at that ID actually supports the specific
+  claim it's attached to. This is a real, observed failure, not a hypothetical: in an early live run
+  against Gemini, the agent cited a real evidence ID (`E2`, a customer message asking about an unrelated
+  billing question) as support for a claim about error rate and open-incident count, and Razi accepted
+  it, because `E2` genuinely existed in the index and the rule stops there. The immediate cause was
+  `EVIDENCE_FIELDS` not indexing `usage_metrics`/`open_incidents`/`contract_value` at all, so those facts
+  had no real citable ID to begin with -- fixed below by indexing them. But that only narrows the
+  fabrication surface; it doesn't close it, since nothing stops an agent from citing a *real*,
+  *existing*, but *wrong* evidence ID for a given claim. Closing that fully needs an entailment check
+  (does the cited text actually say what the justification claims) that core Razi does not have in v1 --
+  this example is evidence that it's worth adding, not something this adapter can safely paper over on
+  its own.
 - **`razi replay`'s policy re-evaluation is hardcoded, not read from the run.** `razi/replay/replay.py`
   re-runs `evaluate_policy` using a synthetic copy of the `enterprise_support_v1` rule set it constructs
   inline, rather than reading whatever policy config was actually used to produce the run. This is a
@@ -173,11 +187,13 @@ any browser, no server or build step required.
   schema requires those fields), and is arguably more honest than core's convention, but it does mean a
   byte-for-byte diff against a `demo_scenarios/` run's `parsed_model_output.json` will look structurally
   different.
-- **The evidence field spec corrects a bug in `examples/escalation.aispec`.** The shipped spec's
-  `evidence.index` operator uses `source: input.customer_message` (singular), but the schema and every
-  fixture use `customer_messages` (plural array) -- `razi/runtime/evidence.py`'s `_resolve_source` silently
-  drops that field as a result. `razi_adapter.py`'s `EVIDENCE_FIELDS` uses the corrected plural key. This
-  example does not patch the shipped `.aispec` itself; that's a separate, out-of-scope core fix.
+- **The evidence field spec corrects a bug in, and gap in, `examples/escalation.aispec`.** The shipped
+  spec's `evidence.index` operator uses `source: input.customer_message` (singular), but the schema and
+  every fixture use `customer_messages` (plural array) -- `razi/runtime/evidence.py`'s `_resolve_source`
+  silently drops that field as a result. It also never indexes `usage_metrics`/`open_incidents`/
+  `contract_value` at all. `razi_adapter.py`'s `EVIDENCE_FIELDS` uses the corrected plural key and adds
+  the missing fields (see the bullet above for why the latter mattered in practice). This example does
+  not patch the shipped `.aispec` itself; that's a separate, out-of-scope core fix.
 - **This is a new "one folder, self-contained" example convention.** `examples/` and `demo_scenarios/`
   elsewhere in this repo are flat (shared `schemas/`/`templates/`/`inputs/` directories across all
   scenarios). An agentic example has runtime code, a governance adapter, and fixtures that don't fit that

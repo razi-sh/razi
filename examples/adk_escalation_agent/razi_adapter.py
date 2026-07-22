@@ -89,21 +89,39 @@ ENTERPRISE_SUPPORT_V1: Dict[str, Any] = {
     },
 }
 
-# Evidence field spec, mirrors examples/escalation.aispec's evidence.index
-# operator, with one correction: the shipped .aispec uses
-# `source: input.customer_message` (singular) while the schema and every
-# fixture use `customer_messages` (plural array) -- razi/runtime/evidence.py's
-# `_resolve_source` silently returns None for the singular key against a
-# plural-keyed input, so that field is dropped from the evidence index in
-# the shipped reference example. We use the corrected plural key here. See
-# README.md's Known Limitations section -- this is a pre-existing bug in
-# examples/escalation.aispec, not something this adapter fixes upstream.
+# Evidence field spec, based on examples/escalation.aispec's evidence.index
+# operator, with two corrections found by actually running this agent
+# against Gemini (see README.md's Known Limitations section for both):
+#
+# 1. The shipped .aispec uses `source: input.customer_message` (singular)
+#    while the schema and every fixture use `customer_messages` (plural
+#    array) -- razi/runtime/evidence.py's `_resolve_source` silently returns
+#    None for the singular key against a plural-keyed input, so that field
+#    is dropped from the evidence index in the shipped reference example.
+#    We use the corrected plural key here. This is a pre-existing bug in
+#    examples/escalation.aispec, not something this adapter fixes upstream.
+#
+# 2. The shipped .aispec's evidence fields never cover usage_metrics /
+#    open_incidents / contract_value at all (get_account_usage's return
+#    value). A live Gemini run cited an evidence ID that genuinely existed
+#    (so evidence_required/no_hallucinated_evidence passed) but that
+#    referred to a customer message about a billing question, while the
+#    justification attached to it claimed facts (error rate, open incident
+#    count) that were never in the evidence index under ANY id -- Razi's
+#    policy engine only checks that a cited ID exists, never that it
+#    supports the specific claim next to it, so this passed. Indexing these
+#    fields makes those facts citable at all, which narrows (but does not
+#    close) that gap -- see Known Limitations for why it can't fully close
+#    without a real entailment check in core Razi.
 EVIDENCE_FIELDS: List[Dict[str, Any]] = [
     {"key": "customer_messages", "source": "input.customer_messages"},
     {"key": "account_tier", "source": "input.account_tier"},
     {"key": "current_severity", "source": "input.current_severity"},
     {"key": "sla_hours", "source": "input.sla_hours"},
     {"key": "time_open", "source": "input.time_open_hours"},
+    {"key": "usage_metrics", "source": "input.usage_metrics"},
+    {"key": "open_incidents", "source": "input.open_incidents"},
+    {"key": "contract_value", "source": "input.contract_value"},
     {"key": "internal_notes", "source": "input.internal_notes", "governed": True},
 ]
 
